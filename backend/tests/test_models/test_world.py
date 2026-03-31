@@ -2,9 +2,10 @@ import pytest
 from datetime import datetime
 from pydantic import ValidationError
 
+
 def test_world_state_creation():
     from app.models.world import WorldState
-    
+
     world = WorldState(
         world_id="test-001",
         era="现代都市",
@@ -16,16 +17,17 @@ def test_world_state_creation():
         environment_state={},
         social_events=[],
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
     )
-    
+
     assert world.world_id == "test-001"
     assert world.era == "现代都市"
     assert world.location["city"] == "杭州"
 
+
 def test_world_state_validation_error():
     from app.models.world import WorldState
-    
+
     with pytest.raises(ValidationError):
         WorldState(
             world_id="test-001",

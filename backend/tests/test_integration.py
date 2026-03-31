@@ -5,8 +5,8 @@ from app.core.state_store import SQLiteStateStore
 from app.core.event_bus import EventBus, Event, EventType
 from app.core.orchestrator import MasterOrchestrator
 from app.models.world import WorldState
-from app.models.character import CharacterState
 from app.models.event import Event as EventModel
+
 
 @pytest.mark.asyncio
 async def test_full_simulation_workflow():
@@ -34,7 +34,7 @@ async def test_full_simulation_workflow():
         "location": {"province": "浙江", "city": "杭州"},
         "time_span": {"start": 1990, "end": 2025},
         "society_type": "平稳发展型",
-        "special_settings": ["包含重大社会事件"]
+        "special_settings": ["包含重大社会事件"],
     }
 
     character_configs = [
@@ -48,22 +48,12 @@ async def test_full_simulation_workflow():
                 "conscientiousness": 68,
                 "extraversion": 45,
                 "agreeableness": 82,
-                "neuroticism": 35
+                "neuroticism": 35,
             },
-            "current_state": {
-                "occupation": "软件工程师",
-                "income_level": 4
-            },
-            "needs": {
-                "physiological": 85,
-                "safety": 78
-            },
-            "skills": {
-                "technical": ["编程", "数据分析"]
-            },
-            "values": {
-                "core_values": ["家庭", "自由"]
-            }
+            "current_state": {"occupation": "软件工程师", "income_level": 4},
+            "needs": {"physiological": 85, "safety": 78},
+            "skills": {"technical": ["编程", "数据分析"]},
+            "values": {"core_values": ["家庭", "自由"]},
         }
     ]
 
@@ -109,20 +99,16 @@ async def test_full_simulation_workflow():
 
     await bus.stop()
 
+
 @pytest.mark.asyncio
 async def test_event_persistence():
     """测试事件持久化"""
-    store = SQLiteStateStore(":memory:")
     bus = EventBus(persist_events=True, log_file="logs/test_events.log")
     await bus.start()
 
     # 发布多个事件
     for i in range(5):
-        event = Event(
-            event_type=EventType.EVENTS_GENERATED,
-            source="test",
-            data={"index": i}
-        )
+        event = Event(event_type=EventType.EVENTS_GENERATED, source="test", data={"index": i})
         await bus.publish(event)
 
     await asyncio.sleep(0.2)  # 等待事件处理
@@ -136,6 +122,7 @@ async def test_event_persistence():
         assert event.data["index"] == i
 
     await bus.stop()
+
 
 @pytest.mark.asyncio
 async def test_multiple_characters_simulation():
@@ -152,7 +139,7 @@ async def test_multiple_characters_simulation():
         "location": {"province": "浙江", "city": "杭州"},
         "time_span": {"start": 1990, "end": 2025},
         "society_type": "平稳发展型",
-        "special_settings": []
+        "special_settings": [],
     }
 
     character_configs = [
@@ -161,34 +148,52 @@ async def test_multiple_characters_simulation():
             "gender": "male",
             "birth_date": datetime(1990, 3, 15),
             "age": 25.0,
-            "personality": {"openness": 75, "conscientiousness": 68, "extraversion": 45, "agreeableness": 82, "neuroticism": 35},
+            "personality": {
+                "openness": 75,
+                "conscientiousness": 68,
+                "extraversion": 45,
+                "agreeableness": 82,
+                "neuroticism": 35,
+            },
             "current_state": {},
             "needs": {},
             "skills": {},
-            "values": {}
+            "values": {},
         },
         {
             "name": "王芳",
             "gender": "female",
             "birth_date": datetime(1992, 7, 20),
             "age": 23.0,
-            "personality": {"openness": 80, "conscientiousness": 75, "extraversion": 60, "agreeableness": 88, "neuroticism": 30},
+            "personality": {
+                "openness": 80,
+                "conscientiousness": 75,
+                "extraversion": 60,
+                "agreeableness": 88,
+                "neuroticism": 30,
+            },
             "current_state": {},
             "needs": {},
             "skills": {},
-            "values": {}
+            "values": {},
         },
         {
             "name": "张伟",
             "gender": "male",
             "birth_date": datetime(1988, 11, 5),
             "age": 27.0,
-            "personality": {"openness": 65, "conscientiousness": 90, "extraversion": 55, "agreeableness": 70, "neuroticism": 40},
+            "personality": {
+                "openness": 65,
+                "conscientiousness": 90,
+                "extraversion": 55,
+                "agreeableness": 70,
+                "neuroticism": 40,
+            },
             "current_state": {},
             "needs": {},
             "skills": {},
-            "values": {}
-        }
+            "values": {},
+        },
     ]
 
     simulation_id = await orchestrator.create_simulation(world_config, character_configs)
@@ -204,6 +209,7 @@ async def test_multiple_characters_simulation():
     assert "张伟" in names
 
     await bus.stop()
+
 
 @pytest.mark.asyncio
 async def test_event_store_integration():
@@ -222,12 +228,12 @@ async def test_event_store_integration():
         environment_state={},
         social_events=[],
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
     )
     await store.create_world(world)
 
     # 创建事件
-    from app.models.event import Event as EventModel, EventType as EventTypeEnum
+    from app.models.event import EventType as EventTypeEnum
 
     event = EventModel(
         event_id="event-001",
@@ -243,7 +249,7 @@ async def test_event_store_integration():
         effects=[],
         impact={},
         is_spark_moment=False,
-        metadata={}
+        metadata={},
     )
 
     event_id = await store.create_event(event)

@@ -3,6 +3,7 @@ from datetime import datetime
 from app.core.state_store import SQLiteStateStore
 from app.models.world import WorldState
 
+
 @pytest.mark.asyncio
 async def test_state_store_interface():
     """测试StateStore接口定义"""
@@ -20,7 +21,7 @@ async def test_state_store_interface():
         environment_state={},
         social_events=[],
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
     )
 
     world_id = await store.create_world(world)
@@ -35,6 +36,7 @@ async def test_state_store_interface():
     # 测试获取不存在的世界
     not_found = await store.get_world("non-existent")
     assert not_found is None
+
 
 @pytest.mark.asyncio
 async def test_state_store_update_world():
@@ -53,16 +55,13 @@ async def test_state_store_update_world():
         environment_state={},
         social_events=[],
         created_at=datetime.now(),
-        updated_at=datetime.now()
+        updated_at=datetime.now(),
     )
 
     await store.create_world(world)
 
     # 更新世界
-    success = await store.update_world("test-001", {
-        "era": "古代",
-        "society_type": "封建社会"
-    })
+    success = await store.update_world("test-001", {"era": "古代", "society_type": "封建社会"})
     assert success is True
 
     # 验证更新

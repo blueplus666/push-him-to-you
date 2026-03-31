@@ -3,9 +3,7 @@ from datetime import datetime
 from app.core.orchestrator import MasterOrchestrator
 from app.core.state_store import SQLiteStateStore
 from app.core.event_bus import EventBus
-from app.models.world import WorldState
-from app.models.character import CharacterState
-from app.models.simulation import SimulationContext
+
 
 @pytest.mark.asyncio
 async def test_orchestrator_create_simulation():
@@ -19,26 +17,28 @@ async def test_orchestrator_create_simulation():
         "location": {"province": "浙江", "city": "杭州"},
         "time_span": {"start": 1990, "end": 2025},
         "society_type": "平稳发展型",
-        "special_settings": []
+        "special_settings": [],
     }
 
-    character_configs = [{
-        "name": "李明",
-        "gender": "male",
-        "birth_date": datetime(1990, 3, 15),
-        "age": 25.0,
-        "personality": {
-            "openness": 75,
-            "conscientiousness": 68,
-            "extraversion": 45,
-            "agreeableness": 82,
-            "neuroticism": 35
-        },
-        "current_state": {},
-        "needs": {},
-        "skills": {},
-        "values": {}
-    }]
+    character_configs = [
+        {
+            "name": "李明",
+            "gender": "male",
+            "birth_date": datetime(1990, 3, 15),
+            "age": 25.0,
+            "personality": {
+                "openness": 75,
+                "conscientiousness": 68,
+                "extraversion": 45,
+                "agreeableness": 82,
+                "neuroticism": 35,
+            },
+            "current_state": {},
+            "needs": {},
+            "skills": {},
+            "values": {},
+        }
+    ]
 
     simulation_id = await orchestrator.create_simulation(world_config, character_configs)
 
@@ -48,6 +48,7 @@ async def test_orchestrator_create_simulation():
     simulation = await store.get_simulation(simulation_id)
     assert simulation is not None
     assert simulation.status == "idle"
+
 
 @pytest.mark.asyncio
 async def test_orchestrator_start_stop_simulation():
@@ -62,26 +63,28 @@ async def test_orchestrator_start_stop_simulation():
         "location": {"province": "浙江", "city": "杭州"},
         "time_span": {"start": 1990, "end": 2025},
         "society_type": "平稳发展型",
-        "special_settings": []
+        "special_settings": [],
     }
 
-    character_configs = [{
-        "name": "李明",
-        "gender": "male",
-        "birth_date": datetime(1990, 3, 15),
-        "age": 25.0,
-        "personality": {
-            "openness": 75,
-            "conscientiousness": 68,
-            "extraversion": 45,
-            "agreeableness": 82,
-            "neuroticism": 35
-        },
-        "current_state": {},
-        "needs": {},
-        "skills": {},
-        "values": {}
-    }]
+    character_configs = [
+        {
+            "name": "李明",
+            "gender": "male",
+            "birth_date": datetime(1990, 3, 15),
+            "age": 25.0,
+            "personality": {
+                "openness": 75,
+                "conscientiousness": 68,
+                "extraversion": 45,
+                "agreeableness": 82,
+                "neuroticism": 35,
+            },
+            "current_state": {},
+            "needs": {},
+            "skills": {},
+            "values": {},
+        }
+    ]
 
     simulation_id = await orchestrator.create_simulation(world_config, character_configs)
 
@@ -94,6 +97,7 @@ async def test_orchestrator_start_stop_simulation():
     await orchestrator.stop_simulation(simulation_id)
     simulation = await store.get_simulation(simulation_id)
     assert simulation.status == "stopped"
+
 
 @pytest.mark.asyncio
 async def test_orchestrator_pause_resume_simulation():
@@ -108,26 +112,28 @@ async def test_orchestrator_pause_resume_simulation():
         "location": {"province": "浙江", "city": "杭州"},
         "time_span": {"start": 1990, "end": 2025},
         "society_type": "平稳发展型",
-        "special_settings": []
+        "special_settings": [],
     }
 
-    character_configs = [{
-        "name": "李明",
-        "gender": "male",
-        "birth_date": datetime(1990, 3, 15),
-        "age": 25.0,
-        "personality": {
-            "openness": 75,
-            "conscientiousness": 68,
-            "extraversion": 45,
-            "agreeableness": 82,
-            "neuroticism": 35
-        },
-        "current_state": {},
-        "needs": {},
-        "skills": {},
-        "values": {}
-    }]
+    character_configs = [
+        {
+            "name": "李明",
+            "gender": "male",
+            "birth_date": datetime(1990, 3, 15),
+            "age": 25.0,
+            "personality": {
+                "openness": 75,
+                "conscientiousness": 68,
+                "extraversion": 45,
+                "agreeableness": 82,
+                "neuroticism": 35,
+            },
+            "current_state": {},
+            "needs": {},
+            "skills": {},
+            "values": {},
+        }
+    ]
 
     simulation_id = await orchestrator.create_simulation(world_config, character_configs)
     await orchestrator.start_simulation(simulation_id)
