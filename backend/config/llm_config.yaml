@@ -1,0 +1,73 @@
+providers:
+  qwen:
+    name: "通义千问"
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    models:
+      - name: "qwen-max"
+        type: "chat"
+        context_length: 32000
+        cost_per_1k_tokens: 0.12
+      - name: "qwen-plus"
+        type: "chat"
+        context_length: 32000
+        cost_per_1k_tokens: 0.008
+      - name: "qwen-turbo"
+        type: "chat"
+        context_length: 8000
+        cost_per_1k_tokens: 0.003
+      - name: "text-embedding-v2"
+        type: "embedding"
+        dimension: 1536
+  
+  glm:
+    name: "智谱GLM"
+    base_url: "https://open.bigmodel.cn/api/paas/v4"
+    models:
+      - name: "glm-5"
+        type: "chat"
+        context_length: 128000
+        cost_per_1k_tokens: 0.1
+      - name: "glm-4.7"
+        type: "chat"
+        context_length: 128000
+        cost_per_1k_tokens: 0.05
+      - name: "glm-4-flash"
+        type: "chat"
+        context_length: 128000
+        cost_per_1k_tokens: 0.001
+  
+  kimi:
+    name: "Moonshot Kimi"
+    base_url: "https://api.moonshot.cn/v1"
+    models:
+      - name: "kimi-k2.5"
+        type: "chat"
+        context_length: 256000
+        cost_per_1k_tokens: 0.12
+      - name: "moonshot-v1-128k"
+        type: "chat"
+        context_length: 128000
+        cost_per_1k_tokens: 0.012
+  
+  doubao:
+    name: "火山引擎豆包"
+    base_url: "https://ark.cn-beijing.volces.com/api/v3"
+    models:
+      - name: "doubao-pro-32k"
+        type: "chat"
+        context_length: 32000
+        cost_per_1k_tokens: 0.008
+      - name: "doubao-lite-32k"
+        type: "chat"
+        context_length: 32000
+        cost_per_1k_tokens: 0.003
+
+default_provider: "qwen"
+
+default_models:
+  world_building: "qwen-max"
+  character_creation: "glm-5"
+  event_generation: "glm-4.7"
+  narrative_writing: "kimi-k2.5"
+  emotional_analysis: "qwen-plus"
+  spark_detection: "glm-5"
