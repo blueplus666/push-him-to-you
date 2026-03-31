@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 from enum import Enum
@@ -44,5 +44,4 @@ class Event(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict, description="元数据")
     created_at: datetime = Field(default_factory=datetime.now, description="创建时间")
 
-    class Config:
-        use_enum_values = True
+    model_config = ConfigDict(use_enum_values=True)

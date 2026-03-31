@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
@@ -51,8 +51,8 @@ class CharacterState(BaseModel):
                 raise ValueError(f"Personality value for {key} must be between 0 and 100")
         return v
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "character_id": "char-001",
                 "world_id": "world-001",
@@ -70,3 +70,4 @@ class CharacterState(BaseModel):
                 "current_state": {"occupation": "软件工程师", "income_level": 4},
             }
         }
+    )

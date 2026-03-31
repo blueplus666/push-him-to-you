@@ -10,9 +10,21 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 @pytest.fixture(scope="session")
 def event_loop():
     """创建事件循环"""
-    loop = asyncio.get_event_loop_policy().new_event_loop()
+    policy = asyncio.get_event_loop_policy()
+    loop = policy.new_event_loop()
     yield loop
-    loop.close()
+    # 清理所有待处理的任务
+    try:
+        pending = asyncio.all_tasks(loop)
+        for task in pending:
+            task.cancel()
+        # 等待所有任务完成
+        if pending:
+            loop.run_until_complete(asyncio.gather(*pending, return_exceptions=True))
+    except Exception:
+        pass
+    finally:
+        loop.close()
 
 
 @pytest.fixture

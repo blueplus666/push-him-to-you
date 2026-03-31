@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 from typing import Dict, List, Callable, Any, Optional
 from collections import defaultdict
 from datetime import datetime
@@ -10,6 +11,16 @@ import logging
 import uuid
 
 logger = logging.getLogger(__name__)
+
+
+def _get_event_loop():
+    """安全获取事件循环"""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    return loop
 
 
 class EventType(str, Enum):
@@ -141,11 +152,11 @@ class EventBus:
         tasks = []
         for callback in callbacks:
             try:
-                if asyncio.iscoroutinefunction(callback):
+                if inspect.iscoroutinefunction(callback):
                     tasks.append(callback(event))
                 else:
                     # 如果是同步函数，在线程池中执行
-                    tasks.append(asyncio.get_event_loop().run_in_executor(None, callback, event))
+                    tasks.append(_get_event_loop().run_in_executor(None, callback, event))
             except Exception as e:
                 logger.error(f"Error creating task for callback: {e}", exc_info=True)
 
@@ -157,7 +168,7 @@ class EventBus:
         """持久化事件到日志文件"""
         try:
             with open(self.log_file, "a", encoding="utf-8") as f:
-                f.write(json.dumps(event.dict(), default=str, ensure_ascii=False) + "\n")
+                f.write(json.dumps(event.model_dump(), default=str, ensure_ascii=False) + "\n")
         except Exception as e:
             logger.error(f"Failed to persist event: {e}")
 

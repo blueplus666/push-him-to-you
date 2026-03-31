@@ -15,6 +15,16 @@ from app.models.simulation import SimulationContext
 logger = logging.getLogger(__name__)
 
 
+def _get_event_loop():
+    """安全获取事件循环"""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+    return loop
+
+
 class StateStore(ABC):
     """状态存储抽象接口"""
 
@@ -274,7 +284,7 @@ class SQLiteStateStore(StateStore):
                 conn.close()
             return world_state.world_id
 
-        return await asyncio.get_event_loop().run_in_executor(None, _create)
+        return await _get_event_loop().run_in_executor(None, _create)
 
     async def get_world(self, world_id: str) -> Optional[WorldState]:
         """获取世界状态"""
@@ -302,7 +312,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _get)
+        return await _get_event_loop().run_in_executor(None, _get)
 
     async def update_world(self, world_id: str, updates: Dict[str, Any]) -> bool:
         """更新世界状态"""
@@ -343,7 +353,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _update)
+        return await _get_event_loop().run_in_executor(None, _update)
 
     async def delete_world(self, world_id: str) -> bool:
         """删除世界状态"""
@@ -357,7 +367,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _delete)
+        return await _get_event_loop().run_in_executor(None, _delete)
 
     # ========== Character State Implementation ==========
     async def create_character(self, character_state: CharacterState) -> str:
@@ -392,7 +402,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return character_state.character_id
 
-        return await asyncio.get_event_loop().run_in_executor(None, _create)
+        return await _get_event_loop().run_in_executor(None, _create)
 
     async def get_character(self, character_id: str) -> Optional[CharacterState]:
         """获取人物状态"""
@@ -424,7 +434,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _get)
+        return await _get_event_loop().run_in_executor(None, _get)
 
     async def update_character(self, character_id: str, updates: Dict[str, Any]) -> bool:
         """更新人物状态"""
@@ -457,7 +467,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _update)
+        return await _get_event_loop().run_in_executor(None, _update)
 
     async def delete_character(self, character_id: str) -> bool:
         """删除人物状态"""
@@ -471,7 +481,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _delete)
+        return await _get_event_loop().run_in_executor(None, _delete)
 
     async def list_characters(self, world_id: str) -> List[CharacterState]:
         """列出世界中的所有人物"""
@@ -506,7 +516,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return characters
 
-        return await asyncio.get_event_loop().run_in_executor(None, _list)
+        return await _get_event_loop().run_in_executor(None, _list)
 
     # ========== Event Implementation ==========
     async def create_event(self, event: Event) -> str:
@@ -542,7 +552,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return event.event_id
 
-        return await asyncio.get_event_loop().run_in_executor(None, _create)
+        return await _get_event_loop().run_in_executor(None, _create)
 
     async def get_event(self, event_id: str) -> Optional[Event]:
         """获取事件"""
@@ -575,7 +585,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _get)
+        return await _get_event_loop().run_in_executor(None, _get)
 
     async def list_events(
         self,
@@ -638,7 +648,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return events
 
-        return await asyncio.get_event_loop().run_in_executor(None, _list)
+        return await _get_event_loop().run_in_executor(None, _list)
 
     # ========== Simulation Context Implementation ==========
     async def create_simulation(self, simulation_context: SimulationContext) -> str:
@@ -669,7 +679,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return simulation_context.simulation_id
 
-        return await asyncio.get_event_loop().run_in_executor(None, _create)
+        return await _get_event_loop().run_in_executor(None, _create)
 
     async def get_simulation(self, simulation_id: str) -> Optional[SimulationContext]:
         """获取模拟上下文"""
@@ -699,7 +709,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _get)
+        return await _get_event_loop().run_in_executor(None, _get)
 
     async def update_simulation(self, simulation_id: str, updates: Dict[str, Any]) -> bool:
         """更新模拟上下文"""
@@ -734,7 +744,7 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _update)
+        return await _get_event_loop().run_in_executor(None, _update)
 
     async def delete_simulation(self, simulation_id: str) -> bool:
         """删除模拟上下文"""
@@ -750,4 +760,4 @@ class SQLiteStateStore(StateStore):
             self._close_connection(conn)
             return result
 
-        return await asyncio.get_event_loop().run_in_executor(None, _delete)
+        return await _get_event_loop().run_in_executor(None, _delete)

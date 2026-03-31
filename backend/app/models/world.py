@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Dict, List, Any
 from datetime import datetime
 
@@ -20,8 +20,8 @@ class WorldState(BaseModel):
     created_at: datetime = Field(default_factory=datetime.now, description="创建时间")
     updated_at: datetime = Field(default_factory=datetime.now, description="更新时间")
 
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "world_id": "world-001",
                 "era": "现代都市",
@@ -34,3 +34,4 @@ class WorldState(BaseModel):
                 "social_events": [],
             }
         }
+    )
