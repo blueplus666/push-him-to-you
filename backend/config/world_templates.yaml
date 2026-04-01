@@ -1,0 +1,87 @@
+templates:
+  modern_urban:
+    name: "现代都市"
+    description: "现代城市背景，适合都市情感、职场故事"
+    era: "现代都市"
+    location: "杭州"
+    society_type: "平稳发展型"
+    special_settings: []
+    default_conflicts:
+      - "贫富差距"
+      - "代际冲突"
+      - "职场竞争"
+    default_culture:
+      core_values:
+        - "勤劳"
+        - "诚信"
+        - "创新"
+      customs:
+        - "春节团圆"
+        - "中秋赏月"
+
+  ancient_wuxia:
+    name: "古代武侠"
+    description: "古代武侠世界，适合江湖恩怨、侠义故事"
+    era: "古代"
+    location: "中原"
+    society_type: "武侠世界"
+    special_settings:
+      - "武林门派"
+      - "江湖恩怨"
+    default_conflicts:
+      - "门派争斗"
+      - "正邪对立"
+      - "江湖仇杀"
+    default_culture:
+      core_values:
+        - "侠义"
+        - "忠诚"
+        - "信义"
+      customs:
+        - "拜师学艺"
+        - "武林大会"
+
+  republican:
+    name: "民国时期"
+    description: "民国背景，适合家族恩怨、时代变迁故事"
+    era: "民国"
+    location: "上海"
+    society_type: "动荡变革型"
+    special_settings:
+      - "新旧交替"
+      - "家族企业"
+    default_conflicts:
+      - "新旧思想冲突"
+      - "家族恩怨"
+      - "民族危机"
+    default_culture:
+      core_values:
+        - "家族荣誉"
+        - "传统美德"
+        - "革新精神"
+      customs:
+        - "祭祖"
+        - "包办婚姻"
+
+  future_sf:
+    name: "未来科幻"
+    description: "未来科幻世界，适合科技伦理、人类命运故事"
+    era: "未来"
+    location: "新世界城"
+    society_type: "科技主导型"
+    special_settings:
+      - "人工智能"
+      - "虚拟现实"
+      - "太空探索"
+    default_conflicts:
+      - "人机矛盾"
+      - "资源争夺"
+      - "伦理困境"
+    default_culture:
+      core_values:
+        - "创新"
+        - "效率"
+        - "平等"
+      customs:
+        - "虚拟聚会"
+        - "数据祭祀"
