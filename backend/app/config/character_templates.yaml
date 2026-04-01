@@ -1,0 +1,85 @@
+templates:
+  ambitious_youth:
+    name: "有志青年"
+    description: "充满理想和抱负的年轻人"
+    personality:
+      openness: 75
+      conscientiousness: 80
+      extraversion: 60
+      agreeableness: 55
+      neuroticism: 40
+    background:
+      family_economic_status: "middle"
+      family_atmosphere: "harmonious"
+    values:
+      core_values: ["成长", "成就", "自由"]
+      life_goal: "实现自我价值"
+      fear: "平庸度过一生"
+      
+  gentle_soul:
+    name: "温柔灵魂"
+    description: "内心柔软、善解人意的人"
+    personality:
+      openness: 70
+      conscientiousness: 65
+      extraversion: 40
+      agreeableness: 90
+      neuroticism: 50
+    background:
+      family_economic_status: "middle"
+      family_atmosphere: "harmonious"
+    values:
+      core_values: ["家庭", "爱", "和谐"]
+      life_goal: "守护所爱之人"
+      fear: "失去所爱之人"
+      
+  rebel_spirit:
+    name: "叛逆灵魂"
+    description: "不羁的、挑战常规的人"
+    personality:
+      openness: 85
+      conscientiousness: 45
+      extraversion: 70
+      agreeableness: 35
+      neuroticism: 60
+    background:
+      family_economic_status: "middle"
+      family_atmosphere: "tense"
+    values:
+      core_values: ["自由", "真实", "突破"]
+      life_goal: "打破束缚，活出真我"
+      fear: "被束缚，失去自我"
+      
+  steady_achiever:
+    name: "稳扎稳打"
+    description: "踏实肯干、追求稳定的人"
+    personality:
+      openness: 50
+      conscientiousness: 85
+      extraversion: 45
+      agreeableness: 70
+      neuroticism: 30
+    background:
+      family_economic_status: "middle"
+      family_atmosphere: "harmonious"
+    values:
+      core_values: ["稳定", "家庭", "责任"]
+      life_goal: "过上安稳幸福的生活"
+      fear: "生活动荡不安"
+      
+  artistic_dreamer:
+    name: "艺术梦想家"
+    description: "富有创造力、追求美的人"
+    personality:
+      openness: 90
+      conscientiousness: 50
+      extraversion: 55
+      agreeableness: 65
+      neuroticism: 55
+    background:
+      family_economic_status: "middle"
+      family_atmosphere: "harmonious"
+    values:
+      core_values: ["艺术", "美", "表达"]
+      life_goal: "创造触动人心的作品"
+      fear: "才华被埋没"
